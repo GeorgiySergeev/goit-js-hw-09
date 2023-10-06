@@ -6,24 +6,24 @@ let intervalId = null;
 
 startBtn.addEventListener('click', onStartBtnClick);
 
-function onStartBtnClick(e) {
-  console.log(startBtn.disabled);
-  startBtn.disabled = true;
-  stopBtn.disabled = false;
+function buttonToggle(btn1, btn2) {
+  btn1.disabled = true;
+  btn2.disabled = false;
+}
+
+function onStartBtnClick() {
+  buttonToggle(startBtn, stopBtn);
 
   intervalId = setInterval(() => {
     bodyEl.style.backgroundColor = getRandomHexColor();
     isActive = false;
   }, 1000);
-
-  
 }
 
 stopBtn.addEventListener('click', () => {
-    clearInterval(intervalId);
-    startBtn.disabled = false;
-    stopBtn.disabled = true;
-  });
+  clearInterval(intervalId);
+  buttonToggle(stopBtn, startBtn);
+});
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215)

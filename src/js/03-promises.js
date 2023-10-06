@@ -1,8 +1,5 @@
 import Notiflix from 'notiflix';
-const createPromiseBtn = document.querySelector('button[type = "submit"]');
-const delayValue = document.querySelector('input[name="delay"]');
-const delayStep = document.querySelector('input[name="step"]');
-const promiseAmount = document.querySelector('input[name="amount"]');
+const formEl = document.querySelector('.form');
 
 function createPromise(position, delay) {
   const promise = new Promise((res, rej) => {
@@ -18,39 +15,30 @@ function createPromise(position, delay) {
   return promise;
 }
 
-//console.log(createPromise(2, 1500))
-
-createPromiseBtn.addEventListener('click', onClickPromicseBtn);
-
-function onClickPromicseBtn(e) {
+formEl.addEventListener('submit', onButtonClick);
+function onButtonClick(e) {
   e.preventDefault();
-  console.log(promiseAmount.value);
-  const firstDelay = Number(delayValue.value);
-  const step = Number(delayStep.value);
 
-  //const delay = firstDelay * step;
+  const formInputEl = e.target.elements;
 
-  for (let i = 0; i < promiseAmount.value; i +=1) {
-    createPromise(1 + i, firstDelay + i * step)
-      .then(({ position, delay }) => {
+  const delay = Number(formInputEl.delay.value);
+  const step = Number(formInputEl.step.value);
+  const amount = formInputEl.amount.value;
+
+  for (let i = 0; i < amount; i += 1) {
+    const position = i + 1;
+    const delayStep = delay + i * step;
+
+    createPromise(position, delayStep)
+      .then(() => {
         Notiflix.Notify.success(
-          `✅ Fulfilled promise ${position} in ${delay}ms`
+          `✅ Fulfilled promise ${position} in ${delayStep}ms`
         );
       })
-      .catch(({ position, delay }) => {
+      .catch(() => {
         Notiflix.Notify.failure(
-          `❌ Rejected promise ${position} in ${delay}ms`
+          `❌ Rejected promise ${position} in ${delayStep}ms`
         );
       });
   }
-
-  //  const inputDlay = e.target
-
-  // createPromise()
-  // .then(({ position, delay }) => {
-  //   console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-  // })
-  // .catch(({ position, delay }) => {
-  //   console.log(`❌ Rejected promise ${position} in ${delay}ms`);
-  // });
 }

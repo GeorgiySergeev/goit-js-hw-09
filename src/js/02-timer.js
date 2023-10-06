@@ -33,9 +33,7 @@ function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
 
-console.log(addLeadingZero(3));
-
-function convertMs(msVal) {
+function convertMs() {
   const second = 1000;
   const minute = second * 60;
   const hour = minute * 60;
@@ -61,8 +59,6 @@ function clickOnStartButton() {
   const intervalId = setInterval(() => {
     let countdown = new Date(inputEl.value) - Date.now();
     startBtn.disabled = true;
-
-    console.log(countdown);
 
     timer(countdown);
 

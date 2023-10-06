@@ -5,6 +5,7 @@ function createPromise(position, delay) {
   const promise = new Promise((res, rej) => {
     setTimeout(() => {
       const shouldResolve = Math.random() > 0.3;
+
       if (shouldResolve) {
         res({ position, delay });
       } else {

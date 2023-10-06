@@ -6,13 +6,13 @@ let intervalId = null;
 
 startBtn.addEventListener('click', onStartBtnClick);
 
-function buttonToggle(btn1, btn2) {
-  btn1.disabled = true;
-  btn2.disabled = false;
+function buttonToggle(active) {
+  startBtn.disabled = active;
+  stopBtn.disabled = !active;
 }
 
 function onStartBtnClick() {
-  buttonToggle(startBtn, stopBtn);
+  buttonToggle(true);
 
   intervalId = setInterval(() => {
     bodyEl.style.backgroundColor = getRandomHexColor();
@@ -21,7 +21,7 @@ function onStartBtnClick() {
 
 stopBtn.addEventListener('click', () => {
   clearInterval(intervalId);
-  buttonToggle(stopBtn, startBtn);
+  buttonToggle(!true);
 });
 
 function getRandomHexColor() {
